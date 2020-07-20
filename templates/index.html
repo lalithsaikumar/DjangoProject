@@ -1,0 +1,537 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    {% block content %}
+    <section class="hero spad set-bg" data-setbg="{{single.thumb.url}}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="hero__text">
+                        <span>New single</span>
+                        <h1>{{single.name}}</h1>
+                        <p>{{single.desc}} <br />{{single.artist}}</p>
+                        <a href="{{single.link}}" class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="linear__icon">
+            <i class="fa fa-angle-double-down"></i>
+        </div>
+    </section>
+
+    <!-- Hero Section End -->
+
+    <!-- Event Section Begin -->
+
+    <section class="event spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2>Upcoming Events</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="event__slider owl-carousel">
+                    {% for event in eventsob %}
+                    <div class="col-lg-4">
+                        <div class="event__item">
+                            <div class="event__item__pic set-bg" data-setbg="{{events}}/{{event.pic}}">
+                                <div class="tag-date">
+                                    <span>{{event.date}}</span>
+                                </div>
+                            </div>
+                            <div class="event__item__text">
+                                <h4>{{event.name}}</h4>
+                                <p><i class="fa fa-map-marker"></i> {{event.venue}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Section End -->
+
+    <!-- About Section Begin -->
+    <section class="about spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="about__pic">
+                        <img src="{{about}}/about.png" alt="about not working">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about__text">
+                        <div class="section-title">
+                            <h2>DJ Alexandra Rud</h2>
+                            <h1>About me</h1>
+                        </div>
+                        <p>DJ Rainflow knows how to move your mind, body and soul by delivering tracks that stand out from the norm. As if this impressive succession of high impact, floor-filling bombs wasn’t enough to sustain.</p>
+                        <a href="#" class="primary-btn">CONTACT ME</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Section End -->
+
+    <!-- Services Section Begin -->
+    <section class="services">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 p-0">
+                    <div class="services__left set-bg" data-setbg="{{services}}/service-left.jpg">
+                        <a href="{{music}}/demons.mp4" class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 p-0">
+                    <div class="row services__list">
+                        {% for service in servicesob %}
+                        <div class="col-lg-6 p-0 order-lg-1 col-md-6 order-md-1">
+                            <div class="service__item deep-bg">
+                                <img src="{{services}}/{{service.pic}}" alt="">
+                                <h4>{{service.name}}</h4>
+                                <p>{{service.desc}}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Services Section End -->
+
+    <!-- Track Section Begin -->
+    <section class="track spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="section-title">
+                        <h2>Latest tracks</h2>
+                        <h1>Music podcast</h1>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="track__all">
+                        <a href="#" class="primary-btn border-btn">View all tracks</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-7 p-0">
+                    <div class="track__content" style="overflow-y: hidden;  overflow-x: hidden;">
+                        <!-- pasted code -->
+                        <style>
+                            .player {
+                                height: 95vh;
+                                display: flex;
+                                align-items: center;
+                                flex-direction: column;
+                                justify-content: center;
+                            }
+                            
+                            .details {
+                                display: flex;
+                                align-items: center;
+                                flex-direction: column;
+                                justify-content: center;
+                                margin-top: 25px;
+                            }
+                            
+                            .track-art {
+                                margin: 25px;
+                                height: 250px;
+                                width: 250px;
+                                background-size: cover;
+                                border-radius: 15%;
+                            }
+                            
+                            .now-playing {
+                                font-size: 1rem;
+                            }
+                            
+                            .track-name {
+                                font-size: 3rem;
+                            }
+                            
+                            .track-artist {
+                                font-size: 1.5rem;
+                            }
+                            
+                            .buttons {
+                                display: flex;
+                                flex-direction: row;
+                                align-items: center;
+                            }
+                            
+                            .playpause-track,
+                            .prev-track,
+                            .next-track {
+                                padding: 25px;
+                                opacity: 0.8;
+                                /* Smoothly transition the opacity */
+                                transition: opacity .2s;
+                            }
+                            
+                            .playpause-track:hover,
+                            .prev-track:hover,
+                            .next-track:hover {
+                                opacity: 1.0;
+                            }
+                            
+                            .slider_container {
+                                width: 75%;
+                                max-width: 400px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                            }
+                            /* Modify the appearance of the slider */
+                            
+                            .seek_slider,
+                            .volume_slider {
+                                -webkit-appearance: none;
+                                -moz-appearance: none;
+                                appearance: none;
+                                height: 5px;
+                                background: black;
+                                opacity: 0.7;
+                                -webkit-transition: .2s;
+                                transition: opacity .2s;
+                            }
+                            /* Modify the appearance of the slider thumb */
+                            
+                            .seek_slider::-webkit-slider-thumb,
+                            .volume_slider::-webkit-slider-thumb {
+                                -webkit-appearance: none;
+                                -moz-appearance: none;
+                                appearance: none;
+                                width: 15px;
+                                height: 15px;
+                                background: white;
+                                cursor: pointer;
+                                border-radius: 50%;
+                            }
+                            
+                            .seek_slider:hover,
+                            .volume_slider:hover {
+                                opacity: 1.0;
+                            }
+                            
+                            .seek_slider {
+                                width: 60%;
+                            }
+                            
+                            .volume_slider {
+                                width: 30%;
+                            }
+                            
+                            .current-time,
+                            .total-duration {
+                                padding: 10px;
+                            }
+                            
+                            i.fa-volume-down,
+                            i.fa-volume-up {
+                                padding: 10px;
+                            }
+                            
+                            i.fa-play-circle,
+                            i.fa-pause-circle,
+                            i.fa-step-forward,
+                            i.fa-step-backward {
+                                cursor: pointer;
+                            }
+                        </style>
+                        <div class="player">
+                            <div class="details">
+                                <div class="now-playing">PLAYING x OF y</div>
+                                <div class="track-art"></div>
+                                <div class="track-name">Track Name</div>
+                                <div class="track-artist">Track Artist</div>
+                            </div>
+                            <div class="buttons">
+                                <div class="prev-track" onclick="prevTrack()"><i class="fa fa-step-backward fa-2x"></i></div>
+                                <div class="playpause-track" onclick="playpauseTrack()"><i class="fa fa-play-circle fa-5x"></i></div>
+                                <div class="next-track" onclick="nextTrack()"><i class="fa fa-step-forward fa-2x"></i></div>
+                            </div>
+                            <div class="slider_container">
+                                <div class="current-time">00:00</div>
+                                <input type="range" min="1" max="100" value="0" class="seek_slider" onchange="seekTo()">
+                                <div class="total-duration">00:00</div>
+                            </div>
+                            <div class="slider_container">
+                                <i class="fa fa-volume-down"></i>
+                                <input type="range" min="1" max="100" value="99" class="volume_slider" onchange="setVolume()">
+                                <i class="fa fa-volume-up"></i>
+                            </div>
+                        </div>
+
+                        <!-- Main script for the player -->
+                        <script>
+                            let now_playing = document.querySelector(".now-playing");
+                            let track_art = document.querySelector(".track-art");
+                            let track_name = document.querySelector(".track-name");
+                            let track_artist = document.querySelector(".track-artist");
+
+                            let playpause_btn = document.querySelector(".playpause-track");
+                            let next_btn = document.querySelector(".next-track");
+                            let prev_btn = document.querySelector(".prev-track");
+
+                            let seek_slider = document.querySelector(".seek_slider");
+                            let volume_slider = document.querySelector(".volume_slider");
+                            let curr_time = document.querySelector(".current-time");
+                            let total_duration = document.querySelector(".total-duration");
+
+                            let track_index = 0;
+                            let isPlaying = false;
+                            let updateTimer;
+
+                            // Create new audio element
+                            let curr_track = document.createElement('audio');
+                            let track_list = [];
+                            var data = JSON.parse("{{allsongs|escapejs}}");
+                            for (var x in data) {
+                                track_list.push({
+                                    name: data[x][0],
+                                    artist: data[x][1],
+                                    image: data[x][2],
+                                    path: data[x][3]
+                                });
+                            }
+
+                            function loadTrack(track_index) {
+                                clearInterval(updateTimer);
+                                resetValues();
+
+                                // Load a new track
+                                curr_track.src = track_list[track_index].path;
+                                curr_track.load();
+
+                                // Update details of the track
+
+                                track_art.style.backgroundImage = "url(" + track_list[track_index].image + ")";
+                                track_name.textContent = track_list[track_index].name;
+                                track_artist.textContent = track_list[track_index].artist;
+                                now_playing.textContent = "PLAYING " + (track_index + 1) + " OF " + track_list.length;
+
+                                // Set an interval of 1000 milliseconds for updating the seek slider
+                                updateTimer = setInterval(seekUpdate, 1000);
+
+                                // Move to the next track if the current one finishes playing
+                                curr_track.addEventListener("ended", nextTrack);
+
+                                // Apply a random background color
+                                random_bg_color();
+                            }
+
+                            function random_bg_color() {
+
+                                // Get a random number between 64 to 256 (for getting lighter colors)
+                                let red = Math.floor(Math.random() * 256) + 64;
+                                let green = Math.floor(Math.random() * 256) + 64;
+                                let blue = Math.floor(Math.random() * 256) + 64;
+
+                                // Construct a color withe the given values
+                                // let bgColor = "rgb(" + red + "," + green + "," + blue + ")";
+
+                                // Set the background to that color
+                                // document.body.style.background = bgColor;
+                            }
+
+                            // Reset Values
+                            function resetValues() {
+                                curr_time.textContent = "00:00";
+                                total_duration.textContent = "00:00";
+                                seek_slider.value = 0;
+                            }
+
+                            function playpauseTrack() {
+                                if (!isPlaying) playTrack();
+                                else pauseTrack();
+                            }
+
+                            function playTrack() {
+                                curr_track.play();
+                                isPlaying = true;
+
+                                // Replace icon with the pause icon
+                                playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
+                            }
+
+                            function pauseTrack() {
+                                curr_track.pause();
+                                isPlaying = false;
+
+                                // Replace icon with the play icon
+                                playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';;
+                            }
+
+                            function nextTrack() {
+                                if (track_index < track_list.length - 1)
+                                    track_index += 1;
+                                else track_index = 0;
+                                loadTrack(track_index);
+                                playTrack();
+                            }
+
+                            function prevTrack() {
+                                if (track_index > 0)
+                                    track_index -= 1;
+                                else track_index = track_list.length;
+                                loadTrack(track_index);
+                                playTrack();
+                            }
+
+                            function seekTo() {
+                                seekto = curr_track.duration * (seek_slider.value / 100);
+                                curr_track.currentTime = seekto;
+                            }
+
+                            function setVolume() {
+                                curr_track.volume = volume_slider.value / 100;
+                            }
+
+                            function seekUpdate() {
+                                let seekPosition = 0;
+
+                                // Check if the current track duration is a legible number
+                                if (!isNaN(curr_track.duration)) {
+                                    seekPosition = curr_track.currentTime * (100 / curr_track.duration);
+                                    seek_slider.value = seekPosition;
+
+                                    // Calculate the time left and the total duration
+                                    let currentMinutes = Math.floor(curr_track.currentTime / 60);
+                                    let currentSeconds = Math.floor(curr_track.currentTime - currentMinutes * 60);
+                                    let durationMinutes = Math.floor(curr_track.duration / 60);
+                                    let durationSeconds = Math.floor(curr_track.duration - durationMinutes * 60);
+
+                                    // Adding a zero to the single digit time values
+                                    if (currentSeconds < 10) {
+                                        currentSeconds = "0" + currentSeconds;
+                                    }
+                                    if (durationSeconds < 10) {
+                                        durationSeconds = "0" + durationSeconds;
+                                    }
+                                    if (currentMinutes < 10) {
+                                        currentMinutes = "0" + currentMinutes;
+                                    }
+                                    if (durationMinutes < 10) {
+                                        durationMinutes = "0" + durationMinutes;
+                                    }
+
+                                    curr_time.textContent = currentMinutes + ":" + currentSeconds;
+                                    total_duration.textContent = durationMinutes + ":" + durationSeconds;
+                                }
+                            }
+
+                            // Load the first track in the tracklist
+                            loadTrack(track_index);
+                        </script>
+
+
+                        <!-- pasted code -->
+                    </div>
+                </div>
+                <div class="col-lg-5 p-0">
+                    <div class="track__pic">
+                        <img src="{{images}}/track-right.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Track Section End -->
+
+    <!-- Youtube Section Begin -->
+    <section class="youtube spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2>Youtube feed</h2>
+                        <h1>Latest videos</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="youtube__item">
+                        <div class="youtube__item__pic set-bg" data-setbg="{{youtube}}/youtube-1.jpg">
+                            <a href="https://www.youtube.com/watch?v=yJg-Y5byMMw?autoplay=1" class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                        </div>
+                        <div class="youtube__item__text">
+                            <h4>David Guetta Miami Ultra Music Festival 2019</h4>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+    <!-- Youtube Section End -->
+
+    <!-- Countdown Section Begin -->
+    <section class="countdown spad set-bg" data-setbg="{{images}}/countdown-bg.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="countdown__text">
+                        <h1>Tomorrowland 2020</h1>
+                        <h4>Music festival start in</h4>
+                    </div>
+                    <div class="countdown__timer" id="countdown-time">
+                        <div class="countdown__item">
+                            <span>20</span>
+                            <p>days</p>
+                        </div>
+                        <div class="countdown__item">
+                            <span>45</span>
+                            <p>hours</p>
+                        </div>
+                        <div class="countdown__item">
+                            <span>18</span>
+                            <p>minutes</p>
+                        </div>
+                        <div class="countdown__item">
+                            <span>09</span>
+                            <p>seconds</p>
+                        </div>
+                        <script>
+                            var timerdate = '12' + '/' + '09' + '/' + '2020';
+                        </script>
+                    </div>
+                    <div class="buy__tickets">
+                        <a href="#" class="primary-btn">Buy tickets</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endblock %}
+    <!-- Countdown Section End -->
+
+    <!-- Footer Section Begin -->
+
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+
+
+    <!-- Music Plugin -->
+
+</body>
+
+</html>
